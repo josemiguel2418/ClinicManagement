@@ -14,5 +14,6 @@ namespace ClinicManagement.Backend.Infrastructure.AppDbContext
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         }
         public DbSet<Especialidad> Especialidades { get; set; }
+        public DbSet<Consultorio> Consultorios { get; set; }
     }
 }
