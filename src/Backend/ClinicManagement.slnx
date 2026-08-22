@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="src/ClinicManagement.Backend.API/ClinicManagement.Backend.API.csproj" Id="2d69c0b8-b8f1-4064-9bc3-96deda470417" />
+  <Project Path="src/ClinicManagement.Backend.Business/ClinicManagement.Backend.Business.csproj" Id="6d9fa394-49f3-4e54-bc2b-291f635bbec0" />
+  <Project Path="src/ClinicManagement.Backend.Domain/ClinicManagement.Backend.Domain.csproj" Id="b810a20d-eaa0-4b1d-83ef-9ca7ae1836c5" />
+  <Project Path="src/ClinicManagement.Backend.Infrastructure/ClinicManagement.Backend.Infrastructure.csproj" Id="30f10342-8f1d-4144-bc66-040d19b39404" />
+</Solution>
