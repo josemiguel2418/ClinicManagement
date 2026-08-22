@@ -15,4 +15,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ClinicManagement.Backend.Infrastructure\ClinicManagement.Backend.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
