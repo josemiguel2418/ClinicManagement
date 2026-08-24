@@ -1,4 +1,5 @@
-﻿using ClinicManagement.Backend.Infrastructure.AppDbContext;
+﻿using ClinicManagement.Backend.Domain.Interfaces;
+using ClinicManagement.Backend.Infrastructure.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +13,7 @@ namespace ClinicManagement.Backend.Infrastructure
             {
                 options.UseSqlServer("name=DefaultConnection");
             });
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
     }
