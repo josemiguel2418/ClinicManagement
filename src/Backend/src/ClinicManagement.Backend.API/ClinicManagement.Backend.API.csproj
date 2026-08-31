@@ -16,10 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\ClinicManagement.Backend.Business\ClinicManagement.Backend.Business.csproj" />
     <ProjectReference Include="..\ClinicManagement.Backend.Infrastructure\ClinicManagement.Backend.Infrastructure.csproj" />
   </ItemGroup>
 

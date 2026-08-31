@@ -1,3 +1,4 @@
+using ClinicManagement.Backend.Business;
 using ClinicManagement.Backend.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddInfrastructure();
+builder.Services.AddBusiness();
 
 var app = builder.Build();
 

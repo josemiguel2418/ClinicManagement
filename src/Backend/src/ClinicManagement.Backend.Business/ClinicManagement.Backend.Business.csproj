@@ -7,10 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
-    <Folder Include="Interfaces\" />
     <Folder Include="Mappings\" />
-    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ClinicManagement.Backend.Domain\ClinicManagement.Backend.Domain.csproj" />
+    <ProjectReference Include="..\ClinicManagement.Backend.Infrastructure\ClinicManagement.Backend.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

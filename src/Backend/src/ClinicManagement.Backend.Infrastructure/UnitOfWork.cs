@@ -5,18 +5,15 @@ namespace ClinicManagement.Backend.Infrastructure
 {
     public class UnitOfWork : IUnitOfWork
     {
+        public IConsultorioRepository ConsultorioRepository { get;}
         private readonly ApplicationDbContext _context;
-        public UnitOfWork(ApplicationDbContext context)
+        public UnitOfWork(ApplicationDbContext context, IConsultorioRepository consultorioRepository)
         {
             _context = context;
+            ConsultorioRepository = consultorioRepository;
         }
 
         public async Task<int> Save() => await _context.SaveChangesAsync();
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
 
     }
 }
