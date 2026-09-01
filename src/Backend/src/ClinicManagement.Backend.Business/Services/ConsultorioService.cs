@@ -4,31 +4,25 @@ using ClinicManagement.Backend.Business.Interfaces;
 using ClinicManagement.Backend.Business.Results;
 using ClinicManagement.Backend.Domain.Entities;
 using ClinicManagement.Backend.Domain.Interfaces;
+using MapsterMapper;
 
 namespace ClinicManagement.Backend.Business.Services
 {
     public class ConsultorioService : IConsultorioService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public ConsultorioService(IUnitOfWork unitOfWork)
+        public ConsultorioService(IUnitOfWork unitOfWork,IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
         
         public async Task<List<ConsultorioDTO>> GetAllAsync(PaginationDTO pagination)
         {
             var consultoriosDB = await _unitOfWork.ConsultorioRepository.GetAllAsync(pagination.Pagina,pagination.RecordsPorPagina);
-            var consultoriosDTO = consultoriosDB.Select(consultorio =>
-            {
-                return new ConsultorioDTO
-                {
-                    Id = consultorio.Id,
-                    Nombre = consultorio.Nombre,
-                    Activo = consultorio.Activo,
-                    Piso = consultorio.Piso
-                };
-            }).ToList();
+            var consultoriosDTO = _mapper.Map<List<ConsultorioDTO>>(consultoriosDB);
             return consultoriosDTO;
         }
 
@@ -39,13 +33,7 @@ namespace ClinicManagement.Backend.Business.Services
             {
                 return Result<ConsultorioDTO>.Failure(ConsultorioErrors.NotFound(id));
             }
-            var dto = new ConsultorioDTO
-            {
-                Id = consultorioDb.Id,
-                Nombre = consultorioDb.Nombre,
-                Activo = consultorioDb.Activo,
-                Piso = consultorioDb.Piso
-            };
+            var dto = _mapper.Map<ConsultorioDTO>(consultorioDb);
             return Result<ConsultorioDTO>.Success(dto);
         }
 
@@ -56,21 +44,11 @@ namespace ClinicManagement.Backend.Business.Services
             {
                 return Result<ConsultorioDTO>.Failure(ConsultorioErrors.NameAlreadyExists);
             }
-            var consultorio = new Consultorio
-            {
-                Nombre = modeloDTO.Nombre,
-                Piso = modeloDTO.Piso,
-                Activo = true
-            };
+            var consultorio = _mapper.Map<Consultorio>(modeloDTO);
+            consultorio.Activo = true;
             _unitOfWork.ConsultorioRepository.Add(consultorio);
             await _unitOfWork.Save();
-            var dto = new ConsultorioDTO
-            {
-                Id = consultorio.Id,
-                Nombre = consultorio.Nombre,
-                Activo = consultorio.Activo,
-                Piso = consultorio.Piso
-            };
+            var dto = _mapper.Map<ConsultorioDTO>(consultorio);
             return Result<ConsultorioDTO>.Success(dto);
         }
 
@@ -89,8 +67,7 @@ namespace ClinicManagement.Backend.Business.Services
 
             }
 
-            consultorioDb.Nombre = modeloDTO.Nombre;
-            consultorioDb.Piso = modeloDTO.Piso;
+            _mapper.Map(modeloDTO, consultorioDb);
             
             await _unitOfWork.Save();
             return Result.Success();
