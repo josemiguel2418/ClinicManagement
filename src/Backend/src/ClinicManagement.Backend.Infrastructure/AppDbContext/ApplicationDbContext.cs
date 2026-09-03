@@ -16,5 +16,6 @@ namespace ClinicManagement.Backend.Infrastructure.AppDbContext
         public DbSet<Especialidad> Especialidades { get; set; }
         public DbSet<Consultorio> Consultorios { get; set; }
         public DbSet<Paciente> Pacientes { get; set; }
+        public DbSet<TipoIdentificacion> TiposIdentificacion { get; set; }
     }
 }

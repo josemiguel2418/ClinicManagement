@@ -31,6 +31,17 @@ namespace ClinicManagement.Backend.Infrastructure.Configurations
             builder.Property(prop => prop.TipoSangre)
                 .HasConversion<string>()
                 .HasMaxLength(30);
+
+            builder.Property(prop => prop.Identificacion)
+                .HasMaxLength(30)
+                .IsRequired();
+
+            builder.HasIndex(prop => new { prop.TipoIdentificacionId, prop.Identificacion }).IsUnique();
+
+            builder.HasOne(p => p.TipoIdentificacion)
+            .WithMany()
+            .HasForeignKey(p => p.TipoIdentificacionId)
+            .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -95,6 +95,11 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
                     b.Property<DateTime>("FechaNacimiento")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Identificacion")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -113,6 +118,9 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("TipoIdentificacionId")
+                        .HasColumnType("int");
+
                     b.Property<string>("TipoSangre")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
@@ -123,7 +131,42 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("[Email] IS NOT NULL");
 
+                    b.HasIndex("TipoIdentificacionId", "Identificacion")
+                        .IsUnique();
+
                     b.ToTable("Pacientes");
+                });
+
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.TipoIdentificacion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Nombre")
+                        .IsUnique();
+
+                    b.ToTable("TiposIdentificacion");
+                });
+
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Paciente", b =>
+                {
+                    b.HasOne("ClinicManagement.Backend.Domain.Entities.TipoIdentificacion", "TipoIdentificacion")
+                        .WithMany()
+                        .HasForeignKey("TipoIdentificacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("TipoIdentificacion");
                 });
 #pragma warning restore 612, 618
         }
