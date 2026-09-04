@@ -18,6 +18,6 @@ namespace ClinicManagement.Backend.Domain.Entities
         public string? Direccion { get; set; }
         public string? Email { get; set; }
         public DateTime FechaCreacion { get; set; }
-
+        public ICollection<AntecedenteMedico> AntecedentesMedicos { get; set; } = [];
     }
 }

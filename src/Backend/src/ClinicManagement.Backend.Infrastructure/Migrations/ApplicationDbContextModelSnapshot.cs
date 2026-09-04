@@ -22,6 +22,33 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.AntecedenteMedico", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PacienteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TipoAntecedenteMedicoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PacienteId");
+
+                    b.HasIndex("TipoAntecedenteMedicoId");
+
+                    b.ToTable("AntecedentesMedico");
+                });
+
             modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Consultorio", b =>
                 {
                     b.Property<int>("Id")
@@ -179,6 +206,25 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
                     b.ToTable("TiposIdentificacion");
                 });
 
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.AntecedenteMedico", b =>
+                {
+                    b.HasOne("ClinicManagement.Backend.Domain.Entities.Paciente", "Paciente")
+                        .WithMany("AntecedentesMedicos")
+                        .HasForeignKey("PacienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ClinicManagement.Backend.Domain.Entities.TipoAntecedenteMedico", "TipoAntecedenteMedico")
+                        .WithMany()
+                        .HasForeignKey("TipoAntecedenteMedicoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Paciente");
+
+                    b.Navigation("TipoAntecedenteMedico");
+                });
+
             modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Paciente", b =>
                 {
                     b.HasOne("ClinicManagement.Backend.Domain.Entities.TipoIdentificacion", "TipoIdentificacion")
@@ -188,6 +234,11 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("TipoIdentificacion");
+                });
+
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Paciente", b =>
+                {
+                    b.Navigation("AntecedentesMedicos");
                 });
 #pragma warning restore 612, 618
         }

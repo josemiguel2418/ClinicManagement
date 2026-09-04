@@ -42,6 +42,11 @@ namespace ClinicManagement.Backend.Infrastructure.Configurations
             .WithMany()
             .HasForeignKey(p => p.TipoIdentificacionId)
             .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(p => p.AntecedentesMedicos)
+                .WithOne(a => a.Paciente)
+                .HasForeignKey(a => a.PacienteId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
