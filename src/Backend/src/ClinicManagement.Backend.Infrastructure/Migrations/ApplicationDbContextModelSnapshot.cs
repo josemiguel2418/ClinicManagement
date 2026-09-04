@@ -137,6 +137,27 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
                     b.ToTable("Pacientes");
                 });
 
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.TipoAntecedenteMedico", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Nombre")
+                        .IsUnique();
+
+                    b.ToTable("TiposAntecedentesMedicos");
+                });
+
             modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.TipoIdentificacion", b =>
                 {
                     b.Property<int>("Id")
