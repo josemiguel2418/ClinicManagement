@@ -16,6 +16,9 @@ namespace ClinicManagement.Backend.Infrastructure.Configurations
                 .HasMaxLength(100)
                 .IsRequired();
 
+            builder.Property(prop => prop.Activo)
+                .HasDefaultValue(true);
+
             builder.HasIndex(prop => prop.Email).IsUnique();
 
             builder.Property(prop => prop.Telefono)
