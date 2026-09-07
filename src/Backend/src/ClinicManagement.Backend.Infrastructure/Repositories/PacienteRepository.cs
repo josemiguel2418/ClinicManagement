@@ -26,17 +26,17 @@ namespace ClinicManagement.Backend.Infrastructure.Repositories
 
         public async Task<List<Paciente>> GetAllAsync(int pagina, int recordsPorPagina)
         {
-            return await _context.Pacientes.Paginate(pagina, recordsPorPagina).OrderBy(p => p.Nombre).AsNoTracking().ToListAsync();
+            return await _context.Pacientes.Paginate(pagina, recordsPorPagina).OrderBy(p => p.Nombre).Include(p => p.TipoIdentificacion).AsNoTracking().ToListAsync();
         }
 
         public async Task<Paciente?> GetByIdAsync(int id)
         {
-            return await _context.Pacientes.Where(p=>p.Id == id).FirstOrDefaultAsync();
+            return await _context.Pacientes.Where(p=>p.Id == id).Include(p => p.TipoIdentificacion).FirstOrDefaultAsync();
         }
 
         public async Task<Paciente?> GetByIdentificacionAsync(string identificacion,int tipoIdentificacionId)
         {
-            return await _context.Pacientes.Where(p => p.Identificacion == identificacion && p.TipoIdentificacionId == tipoIdentificacionId).FirstOrDefaultAsync();
+            return await _context.Pacientes.Where(p => p.Identificacion == identificacion && p.TipoIdentificacionId == tipoIdentificacionId).Include(p=>p.TipoIdentificacion).FirstOrDefaultAsync();
         }
     }
 }

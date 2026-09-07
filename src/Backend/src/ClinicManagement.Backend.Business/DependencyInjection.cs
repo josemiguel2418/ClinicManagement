@@ -10,6 +10,7 @@ namespace ClinicManagement.Backend.Business
         public static IServiceCollection AddBusiness(this IServiceCollection services) 
         {
             services.AddScoped<IConsultorioService,ConsultorioService>();
+            services.AddScoped<IPacienteService,PacienteService>();
             services.AddMapster();
             return services;
         }
