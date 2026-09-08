@@ -7,12 +7,14 @@ namespace ClinicManagement.Backend.Infrastructure
     {
         public IConsultorioRepository ConsultorioRepository { get;}
         public IPacienteRepository PacienteRepository { get;}
+        public IEspecialidadRepository EspecialidadRepository { get;}
         private readonly ApplicationDbContext _context;
-        public UnitOfWork(ApplicationDbContext context, IConsultorioRepository consultorioRepository,IPacienteRepository pacienteRepository)
+        public UnitOfWork(ApplicationDbContext context, IConsultorioRepository consultorioRepository,IPacienteRepository pacienteRepository,IEspecialidadRepository especialidadRepository)
         {
             _context = context;
             ConsultorioRepository = consultorioRepository;
             PacienteRepository = pacienteRepository;
+            EspecialidadRepository = especialidadRepository;
         }
 
         public async Task<int> Save() => await _context.SaveChangesAsync();

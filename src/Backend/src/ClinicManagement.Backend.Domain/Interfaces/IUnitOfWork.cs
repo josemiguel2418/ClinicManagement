@@ -4,6 +4,7 @@
     {
         public IConsultorioRepository ConsultorioRepository { get; }
         public IPacienteRepository PacienteRepository { get; }
+        public IEspecialidadRepository EspecialidadRepository { get; }
         Task<int> Save();
     }
 }

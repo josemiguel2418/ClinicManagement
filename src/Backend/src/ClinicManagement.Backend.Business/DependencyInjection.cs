@@ -11,6 +11,7 @@ namespace ClinicManagement.Backend.Business
         {
             services.AddScoped<IConsultorioService,ConsultorioService>();
             services.AddScoped<IPacienteService,PacienteService>();
+            services.AddScoped<IEspecialidadService,EspecialidadService>();
             services.AddMapster();
             return services;
         }
