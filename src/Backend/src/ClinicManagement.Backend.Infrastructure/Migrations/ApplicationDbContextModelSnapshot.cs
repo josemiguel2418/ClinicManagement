@@ -97,6 +97,75 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
                     b.ToTable("Especialidades");
                 });
 
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Medico", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Activo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Apellido")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Direccion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FechaNacimiento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Identificacion")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Sexo")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("TelefonoEmergencia")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("TipoIdentificacionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
+
+                    b.HasIndex("TipoIdentificacionId", "Identificacion")
+                        .IsUnique();
+
+                    b.ToTable("Medicos");
+                });
+
             modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Paciente", b =>
                 {
                     b.Property<int>("Id")
@@ -228,6 +297,17 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
                     b.Navigation("Paciente");
 
                     b.Navigation("TipoAntecedenteMedico");
+                });
+
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Medico", b =>
+                {
+                    b.HasOne("ClinicManagement.Backend.Domain.Entities.TipoIdentificacion", "TipoIdentificacion")
+                        .WithMany()
+                        .HasForeignKey("TipoIdentificacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("TipoIdentificacion");
                 });
 
             modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Paciente", b =>

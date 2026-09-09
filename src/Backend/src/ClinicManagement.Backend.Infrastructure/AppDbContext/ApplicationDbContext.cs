@@ -19,5 +19,6 @@ namespace ClinicManagement.Backend.Infrastructure.AppDbContext
         public DbSet<TipoIdentificacion> TiposIdentificacion { get; set; }
         public DbSet<TipoAntecedenteMedico> TiposAntecedentesMedicos { get; set; }
         public DbSet<AntecedenteMedico> AntecedentesMedico { get; set; }
+        public DbSet<Medico> Medicos { get; set; }
     }
 }
