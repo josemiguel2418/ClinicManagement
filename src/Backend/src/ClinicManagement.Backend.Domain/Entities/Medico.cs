@@ -18,5 +18,7 @@ namespace ClinicManagement.Backend.Domain.Entities
         public string? Email { get; set; }
         public DateTime FechaCreacion { get; set; }
         public bool Activo { get; set; }
+        public ICollection<MedicoEspecialidad> MedicoEspecialidades { get; set; } = [];
+
     }
 }

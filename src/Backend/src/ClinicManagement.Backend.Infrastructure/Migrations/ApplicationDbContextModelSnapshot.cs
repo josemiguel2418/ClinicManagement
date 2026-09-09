@@ -166,6 +166,21 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
                     b.ToTable("Medicos");
                 });
 
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.MedicoEspecialidad", b =>
+                {
+                    b.Property<int>("MedicoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EspecialidadId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MedicoId", "EspecialidadId");
+
+                    b.HasIndex("EspecialidadId");
+
+                    b.ToTable("MedicosEspecialidades");
+                });
+
             modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Paciente", b =>
                 {
                     b.Property<int>("Id")
@@ -310,6 +325,25 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
                     b.Navigation("TipoIdentificacion");
                 });
 
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.MedicoEspecialidad", b =>
+                {
+                    b.HasOne("ClinicManagement.Backend.Domain.Entities.Especialidad", "Especialidad")
+                        .WithMany()
+                        .HasForeignKey("EspecialidadId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ClinicManagement.Backend.Domain.Entities.Medico", "Medico")
+                        .WithMany("MedicoEspecialidades")
+                        .HasForeignKey("MedicoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Especialidad");
+
+                    b.Navigation("Medico");
+                });
+
             modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Paciente", b =>
                 {
                     b.HasOne("ClinicManagement.Backend.Domain.Entities.TipoIdentificacion", "TipoIdentificacion")
@@ -319,6 +353,11 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("TipoIdentificacion");
+                });
+
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Medico", b =>
+                {
+                    b.Navigation("MedicoEspecialidades");
                 });
 
             modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Paciente", b =>
