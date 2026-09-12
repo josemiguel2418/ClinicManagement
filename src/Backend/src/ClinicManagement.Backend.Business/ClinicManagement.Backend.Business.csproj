@@ -16,8 +16,4 @@
     <ProjectReference Include="..\ClinicManagement.Backend.Infrastructure\ClinicManagement.Backend.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Mappings\" />
-  </ItemGroup>
-
 </Project>

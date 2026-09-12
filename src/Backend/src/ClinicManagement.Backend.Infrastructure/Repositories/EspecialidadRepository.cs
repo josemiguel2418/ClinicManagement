@@ -32,6 +32,12 @@ namespace ClinicManagement.Backend.Infrastructure.Repositories
         {
             return await _context.Especialidades.FirstOrDefaultAsync(e => e.Id == id);
         }
+
+        public async Task<List<int>> GetExistingIdsAsync(IEnumerable<int> ids)
+        {
+            return await _context.Especialidades.Where(e => ids.Contains(e.Id)).Select(e=>e.Id).ToListAsync();
+        }
+
         public async Task<Especialidad?> GetByNombreAsync(string nombre)
         {
             return await _context.Especialidades.FirstOrDefaultAsync(e => e.Nombre == nombre);

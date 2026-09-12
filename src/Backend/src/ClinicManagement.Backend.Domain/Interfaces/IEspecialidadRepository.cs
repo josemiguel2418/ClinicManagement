@@ -6,6 +6,7 @@ namespace ClinicManagement.Backend.Domain.Interfaces
     {
         public void Add(Especialidad especialidad);
         public Task<Especialidad?> GetByIdAsync(int id);
+        Task<List<int>> GetExistingIdsAsync(IEnumerable<int> ids);
         public Task<Especialidad?> GetByNombreAsync(string nombre);
         public Task<List<Especialidad>> GetAllAsync(int pagina, int recordsPorPagina);
         public Task<int> CountRecordsAsync();

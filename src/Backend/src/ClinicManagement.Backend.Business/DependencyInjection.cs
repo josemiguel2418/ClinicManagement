@@ -1,4 +1,5 @@
 ﻿using ClinicManagement.Backend.Business.Interfaces;
+using ClinicManagement.Backend.Business.Mappings;
 using ClinicManagement.Backend.Business.Services;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +13,9 @@ namespace ClinicManagement.Backend.Business
             services.AddScoped<IConsultorioService,ConsultorioService>();
             services.AddScoped<IPacienteService,PacienteService>();
             services.AddScoped<IEspecialidadService,EspecialidadService>();
+            services.AddScoped<IMedicoService,MedicoService>();
             services.AddMapster();
+            MappingConfig.RegisterMappings();
             return services;
         }
     }
