@@ -97,6 +97,47 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
                     b.ToTable("Especialidades");
                 });
 
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.HorarioMedico", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Activo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<int>("ConsultorioId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Dia")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeOnly>("HoraFin")
+                        .HasColumnType("time");
+
+                    b.Property<TimeOnly>("HoraInicio")
+                        .HasColumnType("time");
+
+                    b.Property<int>("MedicoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsultorioId");
+
+                    b.HasIndex("MedicoId");
+
+                    b.ToTable("HorariosMedicos", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_HorarioMedico_HoraInicio_HoraFin", "[HoraInicio] < [HoraFin]");
+                        });
+                });
+
             modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Medico", b =>
                 {
                     b.Property<int>("Id")
@@ -312,6 +353,25 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
                     b.Navigation("Paciente");
 
                     b.Navigation("TipoAntecedenteMedico");
+                });
+
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.HorarioMedico", b =>
+                {
+                    b.HasOne("ClinicManagement.Backend.Domain.Entities.Consultorio", "Consultorio")
+                        .WithMany()
+                        .HasForeignKey("ConsultorioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ClinicManagement.Backend.Domain.Entities.Medico", "Medico")
+                        .WithMany()
+                        .HasForeignKey("MedicoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Consultorio");
+
+                    b.Navigation("Medico");
                 });
 
             modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Medico", b =>
