@@ -9,6 +9,16 @@ namespace ClinicManagement.Backend.Business.Mappings
         public static void RegisterMappings()
         {
             ConfigureMedicoMappings();
+            ConfigureHorarioMedicoMappings();
+        }
+
+        private static void ConfigureHorarioMedicoMappings()
+        {
+            TypeAdapterConfig<HorarioMedico, HorarioMedicoDTO>.NewConfig();
+            TypeAdapterConfig<Consultorio, ConsultorioDTO>.NewConfig();
+            TypeAdapterConfig<Medico, MedicoHorarioDTO>.NewConfig()
+           .Map(dest => dest.Nombre, src => src.Nombre + " " + src.Apellido)
+           .Map(dest => dest.Especialidades, src => src.MedicoEspecialidades.Select(me => me.Especialidad.Nombre));
         }
 
         private static void ConfigureMedicoMappings()

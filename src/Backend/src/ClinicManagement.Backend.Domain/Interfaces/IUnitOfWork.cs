@@ -6,6 +6,7 @@
         public IPacienteRepository PacienteRepository { get; }
         public IEspecialidadRepository EspecialidadRepository { get; }
         public IMedicoRepository MedicoRepository { get; }
+        public IHorarioMedicoRepository HorarioMedicoRepository { get; }
 
         Task<int> Save();
     }

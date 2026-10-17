@@ -9,14 +9,17 @@ namespace ClinicManagement.Backend.Infrastructure
         public IPacienteRepository PacienteRepository { get;}
         public IEspecialidadRepository EspecialidadRepository { get;}
         public IMedicoRepository MedicoRepository { get;}
+        public IHorarioMedicoRepository HorarioMedicoRepository { get; }
+
         private readonly ApplicationDbContext _context;
-        public UnitOfWork(ApplicationDbContext context, IConsultorioRepository consultorioRepository,IPacienteRepository pacienteRepository,IEspecialidadRepository especialidadRepository, IMedicoRepository medicoRepository)
+        public UnitOfWork(ApplicationDbContext context, IConsultorioRepository consultorioRepository,IPacienteRepository pacienteRepository,IEspecialidadRepository especialidadRepository, IMedicoRepository medicoRepository,IHorarioMedicoRepository horarioMedicoRepository)
         {
             _context = context;
             ConsultorioRepository = consultorioRepository;
             PacienteRepository = pacienteRepository;
             EspecialidadRepository = especialidadRepository;
             MedicoRepository = medicoRepository;
+            HorarioMedicoRepository = horarioMedicoRepository;
         }
 
         public async Task<int> Save() => await _context.SaveChangesAsync();

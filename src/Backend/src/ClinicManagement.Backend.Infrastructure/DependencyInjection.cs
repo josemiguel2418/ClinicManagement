@@ -19,6 +19,7 @@ namespace ClinicManagement.Backend.Infrastructure
             services.AddScoped<IPacienteRepository, PacienteRepository>();
             services.AddScoped<IEspecialidadRepository, EspecialidadRepository>();
             services.AddScoped<IMedicoRepository, MedicoRepository>();
+            services.AddScoped<IHorarioMedicoRepository, HorarioMedicoRepository>();
             return services;
         }
     }
