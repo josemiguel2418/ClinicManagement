@@ -7,7 +7,8 @@
         public IEspecialidadRepository EspecialidadRepository { get; }
         public IMedicoRepository MedicoRepository { get; }
         public IHorarioMedicoRepository HorarioMedicoRepository { get; }
-
+        public ITipoAntecedenteMedicoRepository TipoAntecedenteMedicoRepository { get; }
+        public IAntecedenteMedicoRepository AntecedenteMedicoRepository { get; }
         Task<int> Save();
     }
 }

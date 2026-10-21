@@ -17,5 +17,6 @@ namespace ClinicManagement.Backend.Business.DTOs
         public string? Direccion { get; set; }
         public string? Email { get; set; }
         public bool Activo { get; set; }
+        public List<AntecedenteMedicoDTO> AntecedentesMedicos { get; set; } = [];
     }
 }

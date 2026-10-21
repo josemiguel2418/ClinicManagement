@@ -31,7 +31,7 @@ namespace ClinicManagement.Backend.Infrastructure.Repositories
 
         public async Task<Paciente?> GetByIdAsync(int id)
         {
-            return await _context.Pacientes.Where(p=>p.Id == id).Include(p => p.TipoIdentificacion).FirstOrDefaultAsync();
+            return await _context.Pacientes.Where(p=>p.Id == id).Include(p => p.TipoIdentificacion).Include(p=>p.AntecedentesMedicos).FirstOrDefaultAsync();
         }
 
         public async Task<Paciente?> GetByIdentificacionAsync(string identificacion,int tipoIdentificacionId)

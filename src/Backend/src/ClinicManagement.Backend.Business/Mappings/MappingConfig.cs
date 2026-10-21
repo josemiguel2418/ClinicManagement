@@ -10,6 +10,13 @@ namespace ClinicManagement.Backend.Business.Mappings
         {
             ConfigureMedicoMappings();
             ConfigureHorarioMedicoMappings();
+            ConfigurePacienteMappings();
+        }
+
+        private static void ConfigurePacienteMappings()
+        {
+            TypeAdapterConfig<CreatePacienteDTO, Paciente>.NewConfig().Ignore(dest => dest.AntecedentesMedicos);
+            TypeAdapterConfig<UpdatePacienteDTO, Paciente>.NewConfig().Ignore(dest => dest.AntecedentesMedicos);
         }
 
         private static void ConfigureHorarioMedicoMappings()
