@@ -49,6 +49,55 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
                     b.ToTable("AntecedentesMedico");
                 });
 
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Cita", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("EstadoCita")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateOnly>("Fecha")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeOnly>("HoraFin")
+                        .HasColumnType("time(0)");
+
+                    b.Property<TimeOnly>("HoraInicio")
+                        .HasColumnType("time(0)");
+
+                    b.Property<int>("MedicoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Motivo")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("PacienteId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicoId");
+
+                    b.HasIndex("PacienteId");
+
+                    b.ToTable("Citas", t =>
+                        {
+                            t.HasCheckConstraint("CK_Citas_EstadoCita", "[EstadoCita] IN ('Programada', 'Confirmada', 'Completada', 'Cancelada', 'NoAsistio')");
+
+                            t.HasCheckConstraint("CK_Citas_HoraInicio_HoraFin", "[HoraInicio] < [HoraFin]");
+                        });
+                });
+
             modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Consultorio", b =>
                 {
                     b.Property<int>("Id")
@@ -353,6 +402,25 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
                     b.Navigation("Paciente");
 
                     b.Navigation("TipoAntecedenteMedico");
+                });
+
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Cita", b =>
+                {
+                    b.HasOne("ClinicManagement.Backend.Domain.Entities.Medico", "Medico")
+                        .WithMany()
+                        .HasForeignKey("MedicoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ClinicManagement.Backend.Domain.Entities.Paciente", "Paciente")
+                        .WithMany()
+                        .HasForeignKey("PacienteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Medico");
+
+                    b.Navigation("Paciente");
                 });
 
             modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.HorarioMedico", b =>
