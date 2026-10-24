@@ -7,6 +7,8 @@ namespace ClinicManagement.Backend.Domain.Interfaces
     {
         public void Add(HorarioMedico horarioMedico);
         public Task<HorarioMedico?> GetByIdAsync(int id);
+        public Task<List<HorarioMedico>> GetAllAsync(int pagina, int recordsPorPagina);
+        public Task<int> CountRecordsAsync();
         public Task<bool> HasConflictAsync(
             int medicoId,
             int consultorioId,
@@ -14,7 +16,11 @@ namespace ClinicManagement.Backend.Domain.Interfaces
             TimeOnly horaInicio,
             TimeOnly horaFin,
             int? excludedId = null);
-        public Task<List<HorarioMedico>> GetAllAsync(int pagina, int recordsPorPagina);
-        public Task<int> CountRecordsAsync();
+       
+        public Task<bool> HasActiveScheduleCoveringAsync(
+            int medicoId,
+            Dia dia,
+            TimeOnly horaInicio,
+            TimeOnly horaFin);
     }
 }

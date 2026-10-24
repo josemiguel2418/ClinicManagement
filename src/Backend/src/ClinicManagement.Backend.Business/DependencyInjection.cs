@@ -15,6 +15,7 @@ namespace ClinicManagement.Backend.Business
             services.AddScoped<IEspecialidadService,EspecialidadService>();
             services.AddScoped<IMedicoService,MedicoService>();
             services.AddScoped<IHorarioMedicoService, HorarioMedicoService>();
+            services.AddScoped<ICitaService, CitaService>();
             services.AddMapster();
             MappingConfig.RegisterMappings();
             return services;

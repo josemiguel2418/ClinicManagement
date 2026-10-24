@@ -12,9 +12,10 @@ namespace ClinicManagement.Backend.Infrastructure
         public IHorarioMedicoRepository HorarioMedicoRepository { get; }
         public ITipoAntecedenteMedicoRepository TipoAntecedenteMedicoRepository { get; }
         public IAntecedenteMedicoRepository AntecedenteMedicoRepository { get; }
+        public ICitaRepository CitaRepository { get; }
 
         private readonly ApplicationDbContext _context;
-        public UnitOfWork(ApplicationDbContext context, IConsultorioRepository consultorioRepository,IPacienteRepository pacienteRepository,IEspecialidadRepository especialidadRepository, IMedicoRepository medicoRepository,IHorarioMedicoRepository horarioMedicoRepository, ITipoAntecedenteMedicoRepository tipoAntecedenteMedicoRepository, IAntecedenteMedicoRepository antecedenteMedicoRepository)
+        public UnitOfWork(ApplicationDbContext context, IConsultorioRepository consultorioRepository,IPacienteRepository pacienteRepository,IEspecialidadRepository especialidadRepository, IMedicoRepository medicoRepository,IHorarioMedicoRepository horarioMedicoRepository, ITipoAntecedenteMedicoRepository tipoAntecedenteMedicoRepository, IAntecedenteMedicoRepository antecedenteMedicoRepository,ICitaRepository citaRepository)
         {
             _context = context;
             ConsultorioRepository = consultorioRepository;
@@ -24,6 +25,7 @@ namespace ClinicManagement.Backend.Infrastructure
             HorarioMedicoRepository = horarioMedicoRepository;
             TipoAntecedenteMedicoRepository = tipoAntecedenteMedicoRepository;
             AntecedenteMedicoRepository = antecedenteMedicoRepository;
+            CitaRepository = citaRepository;
         }
 
         public async Task<int> Save() => await _context.SaveChangesAsync();

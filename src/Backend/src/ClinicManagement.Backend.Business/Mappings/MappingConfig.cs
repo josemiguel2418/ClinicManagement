@@ -11,8 +11,18 @@ namespace ClinicManagement.Backend.Business.Mappings
             ConfigureMedicoMappings();
             ConfigureHorarioMedicoMappings();
             ConfigurePacienteMappings();
+            ConfigureCitaMappings();
         }
 
+        private static void ConfigureCitaMappings()
+        {
+            TypeAdapterConfig<Medico, CitaMedicoDTO>.NewConfig()
+                .Map(dest => dest.Nombre, src => src.Nombre + " " + src.Apellido)
+                .Map(dest => dest.MedicoEspecialidades, src => src.MedicoEspecialidades.Select(me => me.Especialidad.Nombre));
+           
+            TypeAdapterConfig<Paciente, CitaPacienteDTO>.NewConfig()
+               .Map(dest => dest.Nombre, src => src.Nombre + " " + src.Apellido);
+        }
         private static void ConfigurePacienteMappings()
         {
             TypeAdapterConfig<CreatePacienteDTO, Paciente>.NewConfig().Ignore(dest => dest.AntecedentesMedicos);

@@ -9,6 +9,7 @@
         public IHorarioMedicoRepository HorarioMedicoRepository { get; }
         public ITipoAntecedenteMedicoRepository TipoAntecedenteMedicoRepository { get; }
         public IAntecedenteMedicoRepository AntecedenteMedicoRepository { get; }
+        public ICitaRepository CitaRepository { get; }
         Task<int> Save();
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClinicManagement.Backend.Infrastructure.Repositories
 {
-    internal class HorarioMedicoRepository : IHorarioMedicoRepository
+    public class HorarioMedicoRepository : IHorarioMedicoRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -55,6 +55,21 @@ namespace ClinicManagement.Backend.Infrastructure.Repositories
                     h.MedicoId == medicoId ||
                     h.ConsultorioId == consultorioId
                 ));
+        }
+        public Task<bool> HasActiveScheduleCoveringAsync(
+            int medicoId,
+            Dia dia,
+            TimeOnly horaInicio,
+            TimeOnly horaFin)
+        {
+            return _context.HorariosMedicos.AnyAsync(h =>
+                h.MedicoId == medicoId &&
+                h.Dia == dia &&
+                h.Activo &&
+                h.Medico.Activo &&
+                h.Consultorio.Activo &&
+                h.HoraInicio <= horaInicio &&
+                h.HoraFin >= horaFin);
         }
     }
 }
