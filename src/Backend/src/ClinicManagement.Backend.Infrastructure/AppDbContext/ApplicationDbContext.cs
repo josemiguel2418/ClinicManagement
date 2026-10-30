@@ -23,5 +23,7 @@ namespace ClinicManagement.Backend.Infrastructure.AppDbContext
         public DbSet<MedicoEspecialidad> MedicosEspecialidades { get; set; }
         public DbSet<HorarioMedico> HorariosMedicos { get; set; }
         public DbSet<Cita> Citas { get; set; }
+        public DbSet<Consulta> Consultas { get; set; } 
+        public DbSet<SignosVitales> SignosVitales { get; set; } 
     }
 }

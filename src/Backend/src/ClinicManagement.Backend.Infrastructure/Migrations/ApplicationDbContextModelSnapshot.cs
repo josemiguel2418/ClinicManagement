@@ -98,6 +98,48 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Consulta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CitaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Diagnostico")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaFinalizacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Observacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sintomas")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tratamiento")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CitaId")
+                        .IsUnique();
+
+                    b.ToTable("Consultas");
+                });
+
             modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Consultorio", b =>
                 {
                     b.Property<int>("Id")
@@ -343,6 +385,64 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
                     b.ToTable("Pacientes");
                 });
 
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.SignosVitales", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal?>("Altura")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<int>("ConsultaId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("FrecuenciaCardiaca")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("Peso")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<int?>("PresionDiastolica")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PresionSistolica")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("Temperatura")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsultaId")
+                        .IsUnique();
+
+                    b.ToTable("SignosVitales", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_SignosVitales_AlMenosUnaMedicion", "[Altura] IS NOT NULL\r\nOR [Peso] IS NOT NULL\r\nOR [FrecuenciaCardiaca] IS NOT NULL\r\nOR [Temperatura] IS NOT NULL\r\nOR [PresionSistolica] IS NOT NULL");
+
+                            t.HasCheckConstraint("CK_SignosVitales_AlturaPositiva", "[Altura] IS NULL OR [Altura] > 0");
+
+                            t.HasCheckConstraint("CK_SignosVitales_FrecuenciaCardiacaPositiva", "[FrecuenciaCardiaca] IS NULL OR [FrecuenciaCardiaca] >= 0");
+
+                            t.HasCheckConstraint("CK_SignosVitales_PesoPositivo", "[Peso] IS NULL OR [Peso] > 0");
+
+                            t.HasCheckConstraint("CK_SignosVitales_PresionCompleta", "([PresionSistolica] IS NULL AND [PresionDiastolica] IS NULL)\r\nOR\r\n([PresionSistolica] IS NOT NULL AND [PresionDiastolica] IS NOT NULL)");
+
+                            t.HasCheckConstraint("CK_SignosVitales_PresionPositiva", "([PresionSistolica] IS NULL OR [PresionSistolica] > 0)\r\nAND\r\n([PresionDiastolica] IS NULL OR [PresionDiastolica] > 0)");
+
+                            t.HasCheckConstraint("CK_SignosVitales_TemperaturaPositiva", "[Temperatura] IS NULL OR [Temperatura] > 0");
+                        });
+                });
+
             modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.TipoAntecedenteMedico", b =>
                 {
                     b.Property<int>("Id")
@@ -423,6 +523,17 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
                     b.Navigation("Paciente");
                 });
 
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Consulta", b =>
+                {
+                    b.HasOne("ClinicManagement.Backend.Domain.Entities.Cita", "Cita")
+                        .WithOne()
+                        .HasForeignKey("ClinicManagement.Backend.Domain.Entities.Consulta", "CitaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Cita");
+                });
+
             modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.HorarioMedico", b =>
                 {
                     b.HasOne("ClinicManagement.Backend.Domain.Entities.Consultorio", "Consultorio")
@@ -481,6 +592,22 @@ namespace ClinicManagement.Backend.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("TipoIdentificacion");
+                });
+
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.SignosVitales", b =>
+                {
+                    b.HasOne("ClinicManagement.Backend.Domain.Entities.Consulta", "Consulta")
+                        .WithOne("SignosVitales")
+                        .HasForeignKey("ClinicManagement.Backend.Domain.Entities.SignosVitales", "ConsultaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Consulta");
+                });
+
+            modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Consulta", b =>
+                {
+                    b.Navigation("SignosVitales");
                 });
 
             modelBuilder.Entity("ClinicManagement.Backend.Domain.Entities.Medico", b =>
